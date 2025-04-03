@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thế Giới Điện Thoại - Cửa hàng điện thoại di động</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2980b9;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f7fa;
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1.5rem 0;
+            text-align: center;
+            box-shadow: var(--box-shadow);
+            margin-bottom: 2rem;
+        }
+        
+        h1 {
+            margin: 0;
+            font-size: 2.2rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+        
+        .tagline {
+            font-style: italic;
+            margin-top: 0.5rem;
+            opacity: 0.9;
+        }
+        
+        .container {
+            display: flex;
+            max-width: 1200px;
+            margin: 0 auto 2rem;
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+            min-height: 500px;
+        }
+        
+        .product-list {
+            width: 35%;
+            background-color: var(--light-color);
+            padding: 1.5rem;
+            border-right: 1px solid #ddd;
+        }
+        
+        .product-list h2 {
+            color: var(--dark-color);
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 0.5rem;
+            margin-top: 0;
+        }
+        
+        .product-detail {
+            width: 65%;
+            padding: 2rem;
+            background-color: white;
+        }
+        
+        .product-item {
+            padding: 1rem;
+            margin-bottom: 0.8rem;
+            cursor: pointer;
+            border-radius: var(--border-radius);
+            transition: all 0.3s ease;
+            background-color: white;
+            border-left: 4px solid transparent;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .product-item:hover {
+            transform: translateX(5px);
+            border-left: 4px solid var(--primary-color);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .product-item.active {
+            background-color: var(--primary-color);
+            color: white;
+            border-left: 4px solid var(--accent-color);
+        }
+        
+        .product-item .thumb {
+            width: 50px;
+            height: 50px;
+            border-radius: 4px;
+            object-fit: cover;
+            margin-right: 1rem;
+            border: 1px solid #eee;
+        }
+        
+        .product-item .info {
+            flex: 1;
+        }
+        
+        .product-item .name {
+            font-weight: 600;
+            margin-bottom: 0.2rem;
+        }
+        
+        .product-item .price {
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+        
+        .product-item.active .price {
+            color: white;
+        }
+        
+        .product-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: var(--border-radius);
+            margin-bottom: 1.5rem;
+            box-shadow: var(--box-shadow);
+            border: 1px solid #eee;
+        }
+        
+        .detail-price {
+            color: var(--accent-color);
+            font-weight: bold;
+            font-size: 1.5rem;
+            margin: 1rem 0;
+        }
+        
+        .rating {
+            display: inline-block;
+            background-color: #f39c12;
+            color: white;
+            padding: 0.3rem 0.6rem;
+            border-radius: var(--border-radius);
+            font-weight: bold;
+            margin: 0.5rem 0;
+        }
+        
+        .stock {
+            display: inline-block;
+            background-color: #2ecc71;
+            color: white;
+            padding: 0.3rem 0.6rem;
+            border-radius: var(--border-radius);
+            font-weight: bold;
+            margin-left: 0.5rem;
+        }
+        
+        .badges {
+            margin: 1rem 0;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.7rem 1.5rem;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            border: none;
+            cursor: pointer;
+            margin-top: 1rem;
+            box-shadow: var(--box-shadow);
+        }
+        
+        .btn:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        .btn-buy {
+            background-color: var(--accent-color);
+            margin-right: 1rem;
+        }
+        
+        .btn-buy:hover {
+            background-color: #c0392b;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .empty-message {
+            text-align: center;
+            padding: 2rem;
+            color: #7f8c8d;
+        }
+        
+        .empty-message img {
+            width: 150px;
+            opacity: 0.6;
+            margin-bottom: 1rem;
+        }
+        
+        .specs {
+            margin: 1.5rem 0;
+            padding: 0;
+            list-style-type: none;
+        }
+        
+        .specs li {
+            padding: 0.5rem 0;
+            border-bottom: 1px dashed #ecf0f1;
+            display: flex;
+        }
+        
+        .specs li:last-child {
+            border-bottom: none;
+        }
+        
+        .spec-name {
+            font-weight: bold;
+            width: 120px;
+            color: var(--dark-color);
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            text-align: center;
+            padding: 1.5rem 0;
+            margin-top: 2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .product-list, .product-detail {
+                width: 100%;
+            }
+            
+            .product-list {
+                border-right: none;
+                border-bottom: 1px solid #ddd;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>THẾ GIỚI ĐIỆN THOẠI</h1>
+        <p class="tagline">Nơi hội tụ những smartphone hàng đầu</p>
+    </header>
+    
+    <div class="container">
+        <div class="product-list">
+            <h2>Danh sách sản phẩm</h2>
+            <div id="productList">
+                <!-- Danh sách sản phẩm sẽ được thêm bằng JavaScript -->
+            </div>
+        </div>
+        
+        <div class="product-detail" id="productDetail">
+            <div id="detailContent" class="hidden">
+                <h2 id="productName"></h2>
+                <img id="productImage" class="product-image" src="" alt="Ảnh sản phẩm">
+                <p id="productDescription"></p>
+                
+                <div class="badges">
+                    <span class="rating" id="productRating"></span>
+                    <span class="stock" id="productStock"></span>
+                </div>
+                
+                <div class="detail-price" id="productPrice"></div>
+                
+                <ul class="specs" id="productSpecs">
+                    <!-- Thông số kỹ thuật sẽ được thêm bằng JavaScript -->
+                </ul>
+                
+                <button class="btn btn-buy">Mua ngay</button>
+                <button class="btn">Thêm vào giỏ hàng</button>
+            </div>
+            
+            <div id="emptyMessage" class="empty-message">
+                <img src="https://cdn-icons-png.flaticon.com/512/3652/3652191.png" alt="Chọn sản phẩm">
+                <h3>Chưa có sản phẩm nào được chọn</h3>
+                <p>Vui lòng chọn một điện thoại từ danh sách bên trái để xem chi tiết</p>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>&copy; 2023 Thế Giới Điện Thoại. All rights reserved.</p>
+        <p>Hotline: 1900 1234 - Email: info@thegioidienthoai.com</p>
+    </footer>
+
+    <script>
+        // Dữ liệu sản phẩm điện thoại dạng JSON
+        const products = [
+            {
+                "id": 1,
+                "name": "iPhone 15 Pro Max",
+                "description": "iPhone 15 Pro Max với thiết kế titan cao cấp, chip A17 Pro mạnh mẽ, camera 48MP chuyên nghiệp và màn hình Super Retina XDR 6.7 inch.",
+                "price": 34990000,
+                "image": "https://cdn.hoanghamobile.com/i/preview-h-V2/Uploads/2024/09/09/iphone-15-vang-1.jpg",
+                "thumb": "data:image/avif;base64,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",
+                "rating": "4.9/5",
+                "stock": "Còn hàng",
+                "specs": {
+                    "Màn hình": "6.7\" Super Retina XDR",
+                    "Chip": "A17 Pro",
+                    "RAM": "8GB",
+                    "Bộ nhớ": "256GB/512GB/1TB",
+                    "Camera sau": "48MP + 12MP + 12MP",
+                    "Camera trước": "12MP",
+                    "Pin": "4422 mAh",
+                    "HĐH": "iOS 17"
+                }
+            },
+            {
+                "id": 2,
+                "name": "Samsung Galaxy S23 Ultra",
+                "description": "Galaxy S23 Ultra với bút S Pen tích hợp, camera 200MP đột phá, chip Snapdragon 8 Gen 2 và màn hình Dynamic AMOLED 2X 6.8 inch.",
+                "price": 28990000,
+                "image": "https://didongmango.com/images/products/2023/09/09/large/s23u-my_1694248466.png.webp",
+                "thumb": "https://didongmango.com/images/products/2023/09/09/large/s23u-my_1694248466.png.webp",
+                "rating": "4.8/5",
+                "stock": "Còn hàng",
+                "specs": {
+                    "Màn hình": "6.8\" Dynamic AMOLED 2X",
+                    "Chip": "Snapdragon 8 Gen 2",
+                    "RAM": "12GB",
+                    "Bộ nhớ": "256GB/512GB/1TB",
+                    "Camera sau": "200MP + 12MP + 10MP + 10MP",
+                    "Camera trước": "12MP",
+                    "Pin": "5000 mAh",
+                    "HĐH": "Android 13"
+                }
+            },
+            {
+                "id": 3,
+                "name": "Xiaomi 13 Pro",
+                "description": "Xiaomi 13 Pro với camera Leica 50MP, chip Snapdragon 8 Gen 2, màn hình AMOLED 6.73 inch 120Hz và sạc nhanh 120W.",
+                "price": 22990000,
+                "image": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQCK14Odbb2q5VNpWVRNO3bTFQCzQ6JGtHMIBIVR-w8jE6DW2ck76jBB9OUu-D_4K1yaBf5JXUXUfv8hJD2GyjvnJ_FU4L-tXCbbzM0EdB8paBKOwS9r7EnAwokj5OLpY5uxQ&usqp=CAc",
+                "thumb": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQCK14Odbb2q5VNpWVRNO3bTFQCzQ6JGtHMIBIVR-w8jE6DW2ck76jBB9OUu-D_4K1yaBf5JXUXUfv8hJD2GyjvnJ_FU4L-tXCbbzM0EdB8paBKOwS9r7EnAwokj5OLpY5uxQ&usqp=CAc",
+                "rating": "4.7/5",
+                "stock": "Còn hàng",
+                "specs": {
+                    "Màn hình": "6.73\" AMOLED 120Hz",
+                    "Chip": "Snapdragon 8 Gen 2",
+                    "RAM": "12GB",
+                    "Bộ nhớ": "256GB/512GB",
+                    "Camera sau": "50MP + 50MP + 50MP",
+                    "Camera trước": "32MP",
+                    "Pin": "4820 mAh",
+                    "Sạc": "120W có dây, 50W không dây"
+                }
+            },
+            {
+                "id": 4,
+                "name": "OPPO Find X5 Pro",
+                "description": "OPPO Find X5 Pro với thiết kế gốm cao cấp, camera Hasselblad, chip Snapdragon 8 Gen 1 và màn hình AMOLED 6.7 inch 120Hz.",
+                "price": 21990000,
+                "image": "https://cdni.dienthoaivui.com.vn/x420,webp,q100/https://dashboard.dienthoaivui.com.vn/uploads/wp-content/uploads/images/oppo-find-x5-pro-5g-12gb-256gb-cu-1.jpg",
+                "thumb": "https://cdni.dienthoaivui.com.vn/x420,webp,q100/https://dashboard.dienthoaivui.com.vn/uploads/wp-content/uploads/images/oppo-find-x5-pro-5g-12gb-256gb-cu-1.jpg",
+                "rating": "4.6/5",
+                "stock": "Còn hàng",
+                "specs": {
+                    "Màn hình": "6.7\" AMOLED 120Hz",
+                    "Chip": "Snapdragon 8 Gen 1",
+                    "RAM": "12GB",
+                    "Bộ nhớ": "256GB",
+                    "Camera sau": "50MP + 50MP + 13MP",
+                    "Camera trước": "32MP",
+                    "Pin": "5000 mAh",
+                    "Sạc": "80W có dây, 50W không dây"
+                }
+            },
+            {
+                "id": 5,
+                "name": "Google Pixel 7 Pro",
+                "description": "Google Pixel 7 Pro với camera 50MP sử dụng AI, chip Tensor G2, màn hình OLED 6.7 inch 120Hz và hỗ trợ Android thuần.",
+                "price": 20990000,
+                "image": "https://i.ebayimg.com/images/g/jb0AAOSw-Nxlf~i3/s-l1600.webp",
+                "thumb": "https://i.ebayimg.com/images/g/jb0AAOSw-Nxlf~i3/s-l1600.webp",
+                "rating": "4.5/5",
+                "stock": "Còn hàng",
+                "specs": {
+                    "Màn hình": "6.7\" OLED 120Hz",
+                    "Chip": "Tensor G2",
+                    "RAM": "12GB",
+                    "Bộ nhớ": "128GB/256GB",
+                    "Camera sau": "50MP + 12MP + 48MP",
+                    "Camera trước": "10.8MP",
+                    "Pin": "5000 mAh",
+                    "HĐH": "Android 13"
+                }
+            }
+        ];
+
+        // Hiển thị danh sách sản phẩm
+        const productList = document.getElementById('productList');
+        const detailContent = document.getElementById('detailContent');
+        const emptyMessage = document.getElementById('emptyMessage');
+
+        products.forEach(product => {
+            const productItem = document.createElement('div');
+            productItem.className = 'product-item';
+            productItem.innerHTML = `
+                <img src="${product.thumb}" alt="${product.name}" class="thumb">
+                <div class="info">
+                    <div class="name">${product.name}</div>
+                    <div class="price">${product.price.toLocaleString()} ₫</div>
+                </div>
+            `;
+            productItem.addEventListener('click', () => showProductDetail(product));
+            productList.appendChild(productItem);
+        });
+
+        // Hiển thị chi tiết sản phẩm
+        function showProductDetail(product) {
+            // Ẩn thông báo và hiển thị nội dung chi tiết
+            emptyMessage.classList.add('hidden');
+            detailContent.classList.remove('hidden');
+            
+            // Cập nhật thông tin sản phẩm
+            document.getElementById('productName').textContent = product.name;
+            document.getElementById('productImage').src = product.image;
+            document.getElementById('productImage').alt = product.name;
+            document.getElementById('productDescription').textContent = product.description;
+            document.getElementById('productPrice').textContent = `${product.price.toLocaleString()} ₫`;
+            document.getElementById('productRating').textContent = `${product.rating}`;
+            document.getElementById('productStock').textContent = product.stock;
+            
+            // Hiển thị thông số kỹ thuật
+            const specsList = document.getElementById('productSpecs');
+            specsList.innerHTML = '';
+            
+            for (const [key, value] of Object.entries(product.specs)) {
+                const li = document.createElement('li');
+                li.innerHTML = `<span class="spec-name">${key}:</span> <span>${value}</span>`;
+                specsList.appendChild(li);
+            }
+            
+            // Đổi màu sản phẩm được chọn
+            const allItems = document.querySelectorAll('.product-item');
+            allItems.forEach(item => {
+                item.classList.remove('active');
+                if (item.querySelector('.name').textContent === product.name) {
+                    item.classList.add('active');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
